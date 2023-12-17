@@ -1,12 +1,15 @@
 # Mood Logger
 
-Mood Logger is a simple web application that allows users to log their mood. It's built with HTML, CSS, and JavaScript.
+Mood Logger is a web application that allows users to log their mood. It's built with HTML, CSS, and JavaScript.
 
 ## Features
 
 - Log your current mood
 - View the date and time of each mood entry
 - All data is stored in the browser's local storage
+- Mood history chart using Chart.js
+- Quick mood selection buttons
+- Responsive design
 
 ## Usage
 
