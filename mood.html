@@ -41,6 +41,10 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #moodForm .mood-option {
+            display: inline-block;
+            margin: 5px;
+        }
         #log {
             margin-top: 20px;
             border: 1px solid #ccc;
@@ -67,6 +71,12 @@
     <form id="moodForm">
         <label for="mood">How are you feeling today?</label><br>
         <input type="text" id="mood" name="mood" required><br>
+        <div id="moodOptions">
+            <button class="mood-option" type="button" onclick="selectMood('Happy')">Happy</button>
+            <button class="mood-option" type="button" onclick="selectMood('Sad')">Sad</button>
+            <button class="mood-option" type="button" onclick="selectMood('Excited')">Excited</button>
+            <button class="mood-option" type="button" onclick="selectMood('Angry')">Angry</button>
+        </div>
         <input type="submit" value="Submit">
     </form>
     <div id="log"></div>
@@ -137,6 +147,10 @@
                     }
                 }
             });
+        }
+
+        function selectMood(mood) {
+            document.getElementById('mood').value = mood;
         }
     </script>
     <script>
