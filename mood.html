@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #moodForm {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mood Logger</h1>
+    <form id="moodForm">
+        <label for="mood">How are you feeling today?</label><br>
+        <input type="text" id="mood" name="mood"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="log"></div>
+
+    <script>
+        document.getElementById('moodForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var mood = document.getElementById('mood').value;
+            var dateAndTime = new Date();
+            localStorage.setItem(dateAndTime, mood);
+            document.getElementById('log').innerHTML += `<p>${dateAndTime}: ${mood}</p>`;
+            document.getElementById('mood').value = '';
+        });
+    </script>
+</body>
+</html>
