@@ -139,5 +139,33 @@
             });
         }
     </script>
+    <script>
+        // Add some cool animation to the mood chart
+        var chartCanvas = document.getElementById('moodChart');
+        chartCanvas.addEventListener('mouseover', function() {
+            chartCanvas.classList.add('animated');
+        });
+        chartCanvas.addEventListener('mouseout', function() {
+            chartCanvas.classList.remove('animated');
+        });
+    </script>
+    <style>
+        /* Add animation styles */
+        .animated {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </body>
 </html>
