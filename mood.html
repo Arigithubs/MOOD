@@ -1,3 +1,4 @@
+<!-- FILEPATH: /home/magical/Documents/Pro/MOOD/MOOD/mood.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,10 @@
     <div id="log"></div>
 
     <script>
+        /**
+         * This script logs the user's mood and stores it in the browser's local storage.
+         * It also displays the logged mood along with the date and time on the page.
+         */
         document.getElementById('moodForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var mood = document.getElementById('mood').value;
