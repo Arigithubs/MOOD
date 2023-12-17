@@ -141,7 +141,7 @@
             // Create mood history chart
             var ctx = document.getElementById('moodChart').getContext('2d');
             var chart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar', // Change the chart type to bar
                 data: {
                     labels: moodLabels,
                     datasets: [{
