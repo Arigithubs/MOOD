@@ -44,6 +44,12 @@
             padding: 5px;
             border-bottom: 1px solid #ccc;
         }
+        #moodChart {
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -54,11 +60,14 @@
         <input type="submit" value="Submit">
     </form>
     <div id="log"></div>
+    <canvas id="moodChart"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         /**
          * This script logs the user's mood and stores it in the browser's local storage.
          * It also displays the logged mood along with the date and time on the page.
+         * Additionally, it creates a mood history chart using Chart.js.
          */
         document.getElementById('moodForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -67,7 +76,45 @@
             localStorage.setItem(dateAndTime, mood);
             document.getElementById('log').innerHTML += `<p>${dateAndTime}: ${mood}</p>`;
             document.getElementById('mood').value = '';
+
+            updateMoodChart();
         });
+
+        function updateMoodChart() {
+            var moodData = [];
+            var moodLabels = [];
+
+            // Retrieve mood data from local storage
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                moodData.push(value);
+                moodLabels.push(key);
+            }
+
+            // Create mood history chart
+            var ctx = document.getElementById('moodChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: moodLabels,
+                    datasets: [{
+                        label: 'Mood History',
+                        data: moodData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
