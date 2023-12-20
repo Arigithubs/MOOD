@@ -17,6 +17,26 @@
             color: #fff;
         }
 
+        .menu-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .clear-button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .clear-button:hover {
+            background-color: #c0392b;
+        }
+
         .mood-container {
             display: flex;
             justify-content: center;
@@ -136,10 +156,19 @@
                 transform: scale3d(1, 1, 1);
             }
         }
+
+        @media only screen and (max-width: 768px) {
+            /* Add responsive styles here if needed */
+        }
     </style>
     <title>Mood Logger</title>
 </head>
 <body>
+    <div class="menu-container">
+        <button class="clear-button" onclick="clearAllData()">Clear All Data</button>
+        <button class="chart-button" onclick="showChart()">Show Chart</button>
+    </div>
+
     <div class="mood-container">
         <div class="mood-emoji" onclick="logMood('awful')">😩</div>
         <div class="mood-emoji" onclick="logMood('bad')">😞</div>
@@ -149,7 +178,6 @@
     </div>
 
     <div class="mood-description" id="mood-description">How are you feeling today?</div>
-    <button class="chart-button" onclick="showChart()">Show Chart</button>
 
     <div id="mood-chart-container">
         <div class="loading-overlay" id="loading-overlay">
@@ -241,6 +269,15 @@
             setTimeout(() => {
                 emojiContainer.classList.remove('animate__heartBeat');
             }, 1000);
+        }
+
+        function clearAllData() {
+            const confirmation = confirm("Are you sure you want to clear all your mood data?");
+            if (confirmation) {
+                localStorage.removeItem('userMoods');
+                // Additional logic to reset or update UI as needed
+                alert("All mood data has been cleared.");
+            }
         }
     </script>
 </body>
