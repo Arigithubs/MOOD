@@ -160,6 +160,7 @@
 
     <script>
         const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
+        let chartLoaded = false;
 
         function logMood(mood) {
             userMoods[mood] = (userMoods[mood] || 0) + 1;
@@ -170,26 +171,15 @@
 
         function updateMoodDescription(mood) {
             const moodDescription = document.getElementById('mood-description');
-            switch (mood) {
-                case 'awful':
-                    moodDescription.textContent = 'Feeling awful 😩';
-                    break;
-                case 'bad':
-                    moodDescription.textContent = 'Feeling bad 😞';
-                    break;
-                case 'neutral':
-                    moodDescription.textContent = 'Feeling neutral 😐';
-                    break;
-                case 'good':
-                    moodDescription.textContent = 'Feeling good 😊';
-                    break;
-                case 'rad':
-                    moodDescription.textContent = 'Feeling rad 😎';
-                    break;
-                default:
-                    moodDescription.textContent = 'How are you feeling today?';
-                    break;
-            }
+            const descriptions = {
+                'awful': 'Feeling awful 😩',
+                'bad': 'Feeling bad 😞',
+                'neutral': 'Feeling neutral 😐',
+                'good': 'Feeling good 😊',
+                'rad': 'Feeling rad 😎',
+            };
+
+            moodDescription.textContent = descriptions[mood] || 'How are you feeling today?';
         }
 
         function showChart() {
@@ -199,6 +189,12 @@
             loadingOverlay.style.display = 'flex';
 
             setTimeout(() => {
+                if (chartLoaded) {
+                    // If the chart is already loaded, destroy it before updating
+                    Chart.getChart(ctx).destroy();
+                    chartLoaded = false; // Reset the flag
+                }
+
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -234,6 +230,7 @@
                 });
 
                 loadingOverlay.style.display = 'none';
+                chartLoaded = true;
             }, 1000);
         }
 
