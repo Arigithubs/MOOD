@@ -1,215 +1,250 @@
-<!-- FILEPATH: /home/magical/Documents/Pro/MOOD/MOOD/mood.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
+            background: linear-gradient(to right, #36D1DC, #5B86E5);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
         }
-        h1 {
-            text-align: center;
-            margin-top: 50px;
-            color: #333;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        #moodForm {
-            margin-top: 20px;
-            text-align: center;
-        }
-        #moodForm label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
-            color: #555;
-        }
-        #moodForm input[type="text"] {
-            width: 200px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #moodForm input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #moodForm .mood-option {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #ccc;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #moodForm .mood-option:hover {
-            background-color: #999;
-            color: white;
-        }
-        #log {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #fff;
-        }
-        #log p {
-            margin: 0;
-            padding: 5px;
-            border-bottom: 1px solid #ccc;
-            font-size: 16px;
-            color: #333;
-        }
-        #moodChart {
-            margin-top: 20px;
+
+        .mood-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            animation: fadeInUp 0.8s ease-out;
         }
-    </style>
-    <style>
-        /* Responsive styles */
-        @media screen and (max-width: 600px) {
-            #moodForm input[type="text"] {
-                width: 100%;
+
+        .mood-emoji {
+            font-size: 3rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: bounceIn 0.8s ease-out;
+        }
+
+        .mood-emoji:hover {
+            transform: scale(1.2);
+        }
+
+        .mood-description {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .chart-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #2ECC71;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .chart-button:hover {
+            background-color: #27AE60;
+        }
+
+        #mood-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            animation: fadeIn 0.8s ease-out;
+            display: none;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #3498DB;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
             }
-            #moodForm .mood-option {
-                display: block;
-                margin: 5px auto;
-            }
-            #moodChart {
-                max-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <h1>Mood Logger</h1>
-    <form id="moodForm">
-        <label for="mood">How are you feeling today?</label><br>
-        <input type="text" id="mood" name="mood" required><br>
-        <div id="moodOptions">
-            <button class="mood-option" type="button" onclick="selectMood('Happy')">Happy</button>
-            <button class="mood-option" type="button" onclick="selectMood('Sad')">Sad</button>
-            <button class="mood-option" type="button" onclick="selectMood('Excited')">Excited</button>
-            <button class="mood-option" type="button" onclick="selectMood('Angry')">Angry</button>
-        </div>
-        <input type="submit" value="Submit">
-    </form>
-    <div id="log"></div>
-    <canvas id="moodChart"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        /**
-         * This script logs the user's mood and stores it in the browser's local storage.
-         * It also displays the logged mood along with the date and time on the page.
-         * Additionally, it creates a mood history chart using Chart.js.
-         */
-        document.getElementById('moodForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var mood = document.getElementById('mood').value;
-            var dateAndTime = new Date();
-            localStorage.setItem(dateAndTime, mood);
-            document.getElementById('log').innerHTML += `<p>${dateAndTime}: ${mood}</p>`;
-            document.getElementById('mood').value = '';
-
-            updateMoodChart();
-        });
-
-        function updateMoodChart() {
-            var moodData = [];
-            var moodLabels = [];
-
-            // Retrieve mood data from local storage
-            for (var i = 0; i < localStorage.length; i++) {
-                var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
-                moodData.push(value);
-                moodLabels.push(key);
-            }
-
-            // Create mood history chart
-            var ctx = document.getElementById('moodChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                type: 'bar', // Change the chart type to bar
-                data: {
-                    labels: moodLabels,
-                    datasets: [{
-                        label: 'Mood History',
-                        data: moodData,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Mood History Chart',
-                            font: {
-                                size: 20
-                            }
-                        },
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
-                    },
-                    animation: {
-                        duration: 2000, // Set the duration for the chart animation
-                        easing: 'easeInOutQuart' // Set the easing function for the chart animation
-                    }
-                }
-            });
-        }
-
-        function selectMood(mood) {
-            document.getElementById('mood').value = mood;
-        }
-    </script>
-    <script>
-        // Add some cool animation to the mood chart
-        var chartCanvas = document.getElementById('moodChart');
-        chartCanvas.addEventListener('mouseover', function() {
-            chartCanvas.classList.add('animated');
-        });
-        chartCanvas.addEventListener('mouseout', function() {
-            chartCanvas.classList.remove('animated');
-        });
-    </script>
-    <style>
-        /* Add animation styles */
-        .animated {
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
             0% {
-                transform: scale(1);
+                opacity: 0;
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
             }
             50% {
-                transform: scale(1.1);
+                opacity: 1;
+                transform: scale3d(0.89, 0.89, 0.89);
+            }
+            80% {
+                transform: scale3d(1.03, 1.03, 1.03);
             }
             100% {
-                transform: scale(1);
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
             }
         }
     </style>
+    <title>Mood Logger</title>
+</head>
+<body>
+    <div class="mood-container">
+        <div class="mood-emoji" onclick="logMood('awful')">😩</div>
+        <div class="mood-emoji" onclick="logMood('bad')">😞</div>
+        <div class="mood-emoji" onclick="logMood('neutral')">😐</div>
+        <div class="mood-emoji" onclick="logMood('good')">😊</div>
+        <div class="mood-emoji" onclick="logMood('rad')">😎</div>
+    </div>
+
+    <div class="mood-description" id="mood-description">How are you feeling today?</div>
+    <button class="chart-button" onclick="showChart()">Show Chart</button>
+
+    <div id="mood-chart-container">
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-spinner"></div>
+        </div>
+        <canvas id="mood-chart"></canvas>
+    </div>
+
+    <script>
+        const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
+
+        function logMood(mood) {
+            userMoods[mood] = (userMoods[mood] || 0) + 1;
+            localStorage.setItem('userMoods', JSON.stringify(userMoods));
+            updateMoodDescription(mood);
+            animateEmojiFeedback();
+        }
+
+        function updateMoodDescription(mood) {
+            const moodDescription = document.getElementById('mood-description');
+            switch (mood) {
+                case 'awful':
+                    moodDescription.textContent = 'Feeling awful 😩';
+                    break;
+                case 'bad':
+                    moodDescription.textContent = 'Feeling bad 😞';
+                    break;
+                case 'neutral':
+                    moodDescription.textContent = 'Feeling neutral 😐';
+                    break;
+                case 'good':
+                    moodDescription.textContent = 'Feeling good 😊';
+                    break;
+                case 'rad':
+                    moodDescription.textContent = 'Feeling rad 😎';
+                    break;
+                default:
+                    moodDescription.textContent = 'How are you feeling today?';
+                    break;
+            }
+        }
+
+        function showChart() {
+            const ctx = document.getElementById('mood-chart').getContext('2d');
+            const loadingOverlay = document.getElementById('loading-overlay');
+
+            loadingOverlay.style.display = 'flex';
+
+            setTimeout(() => {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(userMoods),
+                        datasets: [{
+                            label: 'Mood Distribution',
+                            data: Object.values(userMoods),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(255, 159, 64, 0.5)',
+                                'rgba(255, 205, 86, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(54, 162, 235, 0.5)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 205, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 1,
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                stepSize: 1,
+                            },
+                        },
+                    },
+                });
+
+                loadingOverlay.style.display = 'none';
+            }, 1000);
+        }
+
+        function animateEmojiFeedback() {
+            const emojiContainer = document.querySelector('.mood-container');
+            emojiContainer.classList.add('animate__animated', 'animate__heartBeat');
+
+            setTimeout(() => {
+                emojiContainer.classList.remove('animate__heartBeat');
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
