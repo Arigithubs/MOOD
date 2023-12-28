@@ -24,11 +24,16 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .menu-container {
@@ -135,6 +140,22 @@
             animation: spin 1s linear infinite;
         }
 
+        .social-icons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .social-icons i {
+            font-size: 30px;
+            color: #fff;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons i:hover {
+            color: #FFD700; /* Change color on hover */
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -172,6 +193,10 @@
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <h1>Mood Logger</h1>
+            <p>Track your mood and emotions in a fun way!</p>
+        </div>
         <div class="menu-container">
             <button class="button clear-button" onclick="clearAllData()">Clear All Data</button>
             <button class="button chart-button" onclick="showChart()">Show Chart</button>
@@ -180,9 +205,9 @@
         <div class="mood-container">
             <div class="mood-emoji" onclick="logMood('awful')"><i class="far fa-dizzy"></i></div>
             <div class="mood-emoji" onclick="logMood('bad')"><i class="far fa-frown"></i></div>
-            <div class="mood-emoji" onclick="logMood('neutral')"><i class="mood-neutral fas fa-meh"></i></div>
+            <div class="mood-emoji" onclick="logMood('neutral')"><i class="far fa-meh"></i></div>
             <div class="mood-emoji" onclick="logMood('good')"><i class="far fa-smile"></i></div>
-            <div class="mood-emoji" onclick="logMood('rad')"><i class="far fa-grin-stars"></i></div>
+            <div class="mood-emoji" onclick="logMood('rad')"><i class="far fa-grin"></i></div>
         </div>
 
         <div class="mood-description" id="mood-description">How are you feeling today?</div>
@@ -192,6 +217,14 @@
                 <div class="loading-spinner"></div>
             </div>
             <canvas id="mood-chart"></canvas>
+        </div>
+
+        <div class="social-icons">
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-linkedin"></i>
+            <i class="fab fa-youtube"></i>
         </div>
     </div>
 
