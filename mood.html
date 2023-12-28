@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Style for circular favicon */
@@ -33,6 +34,7 @@
         .menu-container {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .button {
@@ -41,6 +43,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 16px;
         }
 
         .clear-button {
@@ -75,6 +78,10 @@
             cursor: pointer;
             transition: transform 0.3s ease;
             animation: bounceIn 0.8s ease-out;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            padding: 10px;
+            margin: 5px;
         }
 
         .mood-emoji:hover {
@@ -82,8 +89,8 @@
         }
 
         .mood-description {
-            font-size: 1.2rem;
-            margin-top: 10px;
+            font-size: 1.5rem;
+            margin-top: 20px;
             text-align: center;
             animation: fadeIn 1s ease-out;
         }
