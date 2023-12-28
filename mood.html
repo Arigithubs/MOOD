@@ -85,10 +85,17 @@
             margin: 5px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            color: #333;
         }
 
         .mood-emoji:hover {
             transform: scale(1.2);
+            background-color: #FFD700; /* Change background color on hover */
         }
 
         .mood-description {
@@ -171,11 +178,11 @@
         </div>
 
         <div class="mood-container">
-            <div class="mood-emoji" onclick="logMood('awful')">😩</div>
-            <div class="mood-emoji" onclick="logMood('bad')">😞</div>
-            <div class="mood-emoji" onclick="logMood('neutral')">😐</div>
-            <div class="mood-emoji" onclick="logMood('good')">😊</div>
-            <div class="mood-emoji" onclick="logMood('rad')">😎</div>
+            <div class="mood-emoji" onclick="logMood('awful')"><i class="far fa-dizzy"></i></div>
+            <div class="mood-emoji" onclick="logMood('bad')"><i class="far fa-frown"></i></div>
+            <div class="mood-emoji" onclick="logMood('neutral')"><i class="mood-neutral fas fa-meh"></i></div>
+            <div class="mood-emoji" onclick="logMood('good')"><i class="far fa-smile"></i></div>
+            <div class="mood-emoji" onclick="logMood('rad')"><i class="far fa-grin-stars"></i></div>
         </div>
 
         <div class="mood-description" id="mood-description">How are you feeling today?</div>
@@ -186,9 +193,6 @@
             </div>
             <canvas id="mood-chart"></canvas>
         </div>
-
-        <!-- App icon -->
-        <img src="https://i.imgur.com/GdtISSi.jpg" alt="App Icon" class="app-icon">
     </div>
 
     <script>
