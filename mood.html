@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* Style for circular favicon */
+        link[rel="icon"] {
+            border-radius: 50%;
+        }
         body {
             display: flex;
             align-items: center;
@@ -35,6 +40,15 @@
 
         .clear-button:hover {
             background-color: #c0392b;
+        }
+
+        .app-icon {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
         }
 
         .mood-container {
@@ -186,6 +200,9 @@
         <canvas id="mood-chart"></canvas>
     </div>
 
+    <!-- App icon -->
+    <img src="https://i.imgur.com/GdtISSi.jpg" alt="App Icon" class="app-icon">
+
     <script>
         const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
         let chartLoaded = false;
@@ -218,9 +235,8 @@
 
             setTimeout(() => {
                 if (chartLoaded) {
-                    // If the chart is already loaded, destroy it before updating
                     Chart.getChart(ctx).destroy();
-                    chartLoaded = false; // Reset the flag
+                    chartLoaded = false;
                 }
 
                 new Chart(ctx, {
@@ -275,7 +291,6 @@
             const confirmation = confirm("Are you sure you want to clear all your mood data?");
             if (confirmation) {
                 localStorage.removeItem('userMoods');
-                // Additional logic to reset or update UI as needed
                 alert("All mood data has been cleared.");
             }
         }
