@@ -22,15 +22,20 @@
             color: #fff;
         }
 
+        .container {
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         .menu-container {
             display: flex;
             justify-content: space-between;
-            margin: 20px;
         }
 
-        .clear-button {
-            background-color: #e74c3c;
-            color: #fff;
+        .button {
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
@@ -38,17 +43,22 @@
             transition: background-color 0.3s ease;
         }
 
+        .clear-button {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
         .clear-button:hover {
             background-color: #c0392b;
         }
 
-        .app-icon {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
+        .chart-button {
+            background-color: #2ECC71;
+            color: #fff;
+        }
+
+        .chart-button:hover {
+            background-color: #27AE60;
         }
 
         .mood-container {
@@ -57,12 +67,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            max-width: 600px;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(to bottom, #4CAF50, #45a049);
             animation: fadeInUp 0.8s ease-out;
         }
 
@@ -84,39 +88,10 @@
             animation: fadeIn 1s ease-out;
         }
 
-        .chart-button {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            background-color: #2ECC71;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-            animation: fadeIn 1.2s ease-out;
-        }
-
-        .chart-button:hover {
-            background-color: #27AE60;
-        }
-
-        #mood-chart-container {
+        .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border-radius: 8px;
         }
 
         .loading-overlay {
@@ -178,30 +153,32 @@
     <title>Mood Logger</title>
 </head>
 <body>
-    <div class="menu-container">
-        <button class="clear-button" onclick="clearAllData()">Clear All Data</button>
-        <button class="chart-button" onclick="showChart()">Show Chart</button>
-    </div>
-
-    <div class="mood-container">
-        <div class="mood-emoji" onclick="logMood('awful')">😩</div>
-        <div class="mood-emoji" onclick="logMood('bad')">😞</div>
-        <div class="mood-emoji" onclick="logMood('neutral')">😐</div>
-        <div class="mood-emoji" onclick="logMood('good')">😊</div>
-        <div class="mood-emoji" onclick="logMood('rad')">😎</div>
-    </div>
-
-    <div class="mood-description" id="mood-description">How are you feeling today?</div>
-
-    <div id="mood-chart-container">
-        <div class="loading-overlay" id="loading-overlay">
-            <div class="loading-spinner"></div>
+    <div class="container">
+        <div class="menu-container">
+            <button class="button clear-button" onclick="clearAllData()">Clear All Data</button>
+            <button class="button chart-button" onclick="showChart()">Show Chart</button>
         </div>
-        <canvas id="mood-chart"></canvas>
-    </div>
 
-    <!-- App icon -->
-    <img src="https://i.imgur.com/GdtISSi.jpg" alt="App Icon" class="app-icon">
+        <div class="mood-container">
+            <div class="mood-emoji" onclick="logMood('awful')">😩</div>
+            <div class="mood-emoji" onclick="logMood('bad')">😞</div>
+            <div class="mood-emoji" onclick="logMood('neutral')">😐</div>
+            <div class="mood-emoji" onclick="logMood('good')">😊</div>
+            <div class="mood-emoji" onclick="logMood('rad')">😎</div>
+        </div>
+
+        <div class="mood-description" id="mood-description">How are you feeling today?</div>
+
+        <div class="chart-container">
+            <div class="loading-overlay" id="loading-overlay">
+                <div class="loading-spinner"></div>
+            </div>
+            <canvas id="mood-chart"></canvas>
+        </div>
+
+        <!-- App icon -->
+        <img src="https://i.imgur.com/GdtISSi.jpg" alt="App Icon" class="app-icon">
+    </div>
 
     <script>
         const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
