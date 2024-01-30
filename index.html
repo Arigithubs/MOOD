@@ -6,354 +6,361 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Style for circular favicon */
-        link[rel="icon"] {
-            border-radius: 50%;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #fff;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .menu-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-
-        .clear-button {
-            background-color: #FF5252;
-            color: #fff;
-        }
-
-        .clear-button:hover {
-            background-color: #FF1F1F;
-        }
-
-        .chart-button {
-            background-color: #69F0AE;
-            color: #000;
-        }
-
-        .chart-button:hover {
-            background-color: #00E676;
-        }
-
-        .mood-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .mood-emoji {
-            font-size: 3rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            animation: bounceIn 0.8s ease-out;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            padding: 10px;
-            margin: 5px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 80px;
-            height: 80px;
-            color: #333;
-        }
-
-        .mood-emoji:hover {
-            transform: scale(1.2);
-            background-color: #FFD700; /* Change background color on hover */
-        }
-
-        .mood-description {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-        }
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            animation: fadeIn 0.8s ease-out;
-            display: none;
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid #3498DB;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-
-        .social-icons {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .social-icons i {
-            font-size: 30px;
-            color: #fff;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons i:hover {
-            color: #FFD700; /* Change color on hover */
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes bounceIn {
-            0%, 20%, 50%, 80%, 100% {
-                transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            /* Style for circular favicon */
+            link[rel="icon"] {
+                border-radius: 50%;
             }
-            0% {
-                opacity: 0;
-                transform: scale3d(0.3, 0.3, 0.3);
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
+                color: #fff;
+                transition: background-color 0.3s ease;
             }
-            20% {
-                transform: scale3d(1.1, 1.1, 1.1);
+
+            .container {
+                max-width: 800px;
+                margin: 20px;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease;
             }
-            50% {
-                opacity: 1;
-                transform: scale3d(0.89, 0.89, 0.89);
+
+            .header {
+                text-align: center;
+                margin-bottom: 20px;
             }
-            80% {
-                transform: scale3d(1.03, 1.03, 1.03);
+
+            .menu-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
             }
-            100% {
-                opacity: 1;
-                transform: scale3d(1, 1, 1);
+
+            .button {
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                font-size: 16px;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
             }
-        }
 
-        @media only screen and (max-width: 768px) {
-            /* Add responsive styles here if needed */
-        }
+            .clear-button {
+                background-color: #FF5252;
+                color: #fff;
+            }
 
-        /* Dark theme */
-        body.dark-mode {
-            background: linear-gradient(to right, #333, #000);
-            color: #fff;
-        }
+            .clear-button:hover {
+                background-color: #FF1F1F;
+            }
 
-        body.dark-mode .container {
-            background-color: #222;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        }
+            .chart-button {
+                background-color: #69F0AE;
+                color: #000;
+            }
 
-        body.dark-mode .mood-emoji {
-            background-color: #333;
-            color: #fff;
-            border-color: #fff;
-        }
+            .chart-button:hover {
+                background-color: #00E676;
+            }
 
-        body.dark-mode .mood-emoji:hover {
-            background-color: #FFD700;
-            color: #000;
-        }
+            .mood-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                animation: fadeInUp 0.8s ease-out;
+            }
 
-        body.dark-mode .social-icons i {
-            color: #fff;
-        }
+            .mood-emoji {
+                font-size: 3rem;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+                animation: bounceIn 0.8s ease-out;
+                border: 2px solid #fff;
+                border-radius: 50%;
+                padding: 10px;
+                margin: 5px;
+                background-color: #fff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 80px;
+                height: 80px;
+                color: #333;
+            }
 
-        body.dark-mode .social-icons i:hover {
-            color: #FFD700;
-        }
-    </style>
-    <title>Mood Logger</title>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Mood Logger</h1>
-            <p>Track your mood and emotions in a fun way!</p>
-        </div>
-        <div class="menu-container">
-            <button class="button clear-button" onclick="clearAllData()">Clear All Data</button>
-            <button class="button chart-button" onclick="showChart()">Show Chart</button>
-            <button class="button" onclick="toggleTheme()">Toggle Theme</button>
-        </div>
+            .mood-emoji:hover {
+                transform: scale(1.2);
+                background-color: #FFD700; /* Change background color on hover */
+            }
 
-        <div class="mood-container">
-            <div class="mood-emoji" onclick="logMood('awful')"><i class="far fa-dizzy"></i></div>
-            <div class="mood-emoji" onclick="logMood('bad')"><i class="far fa-frown"></i></div>
-            <div class="mood-emoji" onclick="logMood('neutral')"><i class="far fa-meh"></i></div>
-            <div class="mood-emoji" onclick="logMood('good')"><i class="far fa-smile"></i></div>
-            <div class="mood-emoji" onclick="logMood('rad')"><i class="far fa-grin"></i></div>
-        </div>
+            .mood-description {
+                font-size: 1.5rem;
+                margin-top: 20px;
+                text-align: center;
+                animation: fadeIn 1s ease-out;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
+            }
 
-        <div class="mood-description" id="mood-description">How are you feeling today?</div>
+            .chart-container {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+            }
 
-        <div class="chart-container">
-            <div class="loading-overlay" id="loading-overlay">
-                <div class="loading-spinner"></div>
-            </div>
-            <canvas id="mood-chart"></canvas>
-        </div>
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.8);
+                animation: fadeIn 0.8s ease-out;
+                display: none;
+            }
 
-        <div class="social-icons">
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-facebook"></i>
-            <i class="fab fa-linkedin"></i>
-            <i class="fab fa-youtube"></i>
-        </div>
-    </div>
+            .loading-spinner {
+                border: 4px solid rgba(0, 0, 0, 0.1);
+                border-radius: 50%;
+                border-top: 4px solid #3498DB;
+                width: 30px;
+                height: 30px;
+                animation: spin 1s linear infinite;
+            }
 
-    <script>
-        const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
-        let chartLoaded = false;
+            .social-icons {
+                text-align: center;
+                margin-top: 30px;
+            }
 
-        function logMood(mood) {
-            userMoods[mood] = (userMoods[mood] || 0) + 1;
-            localStorage.setItem('userMoods', JSON.stringify(userMoods));
-            updateMoodDescription(mood);
-            animateEmojiFeedback();
-        }
+            .social-icons i {
+                font-size: 30px;
+                color: #fff;
+                margin: 0 10px;
+                transition: color 0.3s ease;
+            }
 
-        function updateMoodDescription(mood) {
-            const moodDescription = document.getElementById('mood-description');
-            const descriptions = {
-                'awful': 'Feeling awful 😩',
-                'bad': 'Feeling bad 😞',
-                'neutral': 'Feeling neutral 😐',
-                'good': 'Feeling good 😊',
-                'rad': 'Feeling rad 😎',
-            };
+            .social-icons i:hover {
+                color: #FFD700; /* Change color on hover */
+            }
 
-            moodDescription.textContent = descriptions[mood] || 'How are you feeling today?';
-        }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
 
-        function showChart() {
-            const ctx = document.getElementById('mood-chart').getContext('2d');
-            const loadingOverlay = document.getElementById('loading-overlay');
-
-            loadingOverlay.style.display = 'flex';
-
-            setTimeout(() => {
-                if (chartLoaded) {
-                    Chart.getChart(ctx).destroy();
-                    chartLoaded = false;
+            @keyframes bounceIn {
+                0%, 20%, 50%, 80%, 100% {
+                    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
                 }
+                0% {
+                    opacity: 0;
+                    transform: scale3d(0.3, 0.3, 0.3);
+                }
+                20% {
+                    transform: scale3d(1.1, 1.1, 1.1);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale3d(0.89, 0.89, 0.89);
+                }
+                80% {
+                    transform: scale3d(1.03, 1.03, 1.03);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale3d(1, 1, 1);
+                }
+            }
 
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: Object.keys(userMoods),
-                        datasets: [{
-                            label: 'Mood Distribution',
-                            data: Object.values(userMoods),
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.5)',
-                                'rgba(255, 159, 64, 0.5)',
-                                'rgba(255, 205, 86, 0.5)',
-                                'rgba(75, 192, 192, 0.5)',
-                                'rgba(54, 162, 235, 0.5)',
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(255, 159, 64, 1)',
-                                'rgba(255, 205, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(54, 162, 235, 1)',
-                            ],
-                            borderWidth: 1,
-                        }],
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                stepSize: 1,
+            @media only screen and (max-width: 768px) {
+                /* Add responsive styles here if needed */
+            }
+
+            /* Dark theme */
+            body.dark-mode {
+                background: linear-gradient(to right, #333, #000);
+                color: #fff;
+            }
+
+            body.dark-mode .container {
+                background-color: #222;
+                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            }
+
+            body.dark-mode .mood-emoji {
+                background-color: #333;
+                color: #fff;
+                border-color: #fff;
+            }
+
+            body.dark-mode .mood-emoji:hover {
+                background-color: #FFD700;
+                color: #000;
+            }
+
+            body.dark-mode .social-icons i {
+                color: #fff;
+            }
+
+            body.dark-mode .social-icons i:hover {
+                color: #FFD700;
+            }
+        </style>
+        <title>Mood Logger</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Mood Logger</h1>
+                <p>Track your mood and emotions in a fun way!</p>
+            </div>
+            <div class="menu-container">
+                <button class="button clear-button" onclick="clearAllData()">Clear All Data</button>
+                <button class="button chart-button" onclick="showChart()">Show Chart</button>
+                <button class="button" onclick="toggleTheme()">Toggle Theme</button>
+            </div>
+
+            <div class="mood-container">
+                <div class="mood-emoji" onclick="logMood('awful')"><i class="far fa-dizzy"></i></div>
+                <div class="mood-emoji" onclick="logMood('bad')"><i class="far fa-frown"></i></div>
+                <div class="mood-emoji" onclick="logMood('neutral')"><i class="far fa-meh"></i></div>
+                <div class="mood-emoji" onclick="logMood('good')"><i class="far fa-smile"></i></div>
+                <div class="mood-emoji" onclick="logMood('rad')"><i class="far fa-grin"></i></div>
+            </div>
+
+            <div class="mood-description" id="mood-description">How are you feeling today?</div>
+
+            <div class="chart-container">
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="loading-spinner"></div>
+                </div>
+                <canvas id="mood-chart"></canvas>
+            </div>
+
+            <div class="social-icons">
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-linkedin"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+
+        <script>
+            const userMoods = JSON.parse(localStorage.getItem('userMoods')) || {};
+            let chartLoaded = false;
+
+            function logMood(mood) {
+                userMoods[mood] = (userMoods[mood] || 0) + 1;
+                localStorage.setItem('userMoods', JSON.stringify(userMoods));
+                updateMoodDescription(mood);
+                animateEmojiFeedback();
+            }
+
+            function updateMoodDescription(mood) {
+                const moodDescription = document.getElementById('mood-description');
+                const descriptions = {
+                    'awful': 'Feeling awful 😩',
+                    'bad': 'Feeling bad 😞',
+                    'neutral': 'Feeling neutral 😐',
+                    'good': 'Feeling good 😊',
+                    'rad': 'Feeling rad 😎',
+                };
+
+                moodDescription.textContent = descriptions[mood] || 'How are you feeling today?';
+            }
+
+            function showChart() {
+                const ctx = document.getElementById('mood-chart').getContext('2d');
+                const loadingOverlay = document.getElementById('loading-overlay');
+
+                loadingOverlay.style.display = 'flex';
+
+                setTimeout(() => {
+                    if (chartLoaded) {
+                        Chart.getChart(ctx).destroy();
+                        chartLoaded = false;
+                    }
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(userMoods),
+                            datasets: [{
+                                label: 'Mood Distribution',
+                                data: Object.values(userMoods),
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(255, 159, 64, 0.5)',
+                                    'rgba(255, 205, 86, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 205, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                ],
+                                borderWidth: 1,
+                            }],
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    stepSize: 1,
+                                },
                             },
                         },
-                    },
-                });
+                    });
 
-                loadingOverlay.style.display = 'none';
-                chartLoaded = true;
-            }, 1000);
-        }
-
-        function animateEmojiFeedback() {
-            const emojiContainer = document.querySelector('.mood-container');
-            emojiContainer.classList.add('animate__animated', 'animate__heartBeat');
-
-            setTimeout(() => {
-                emojiContainer.classList.remove('animate__heartBeat');
-            }, 1000);
-        }
-
-        function clearAllData() {
-            const confirmation = confirm("Are you sure you want to clear all your mood data?");
-            if (confirmation) {
-                localStorage.removeItem('userMoods');
-                alert("All mood data has been cleared.");
+                    loadingOverlay.style.display = 'none';
+                    chartLoaded = true;
+                }, 1000);
             }
-        }
 
-        function toggleTheme() {
-            const body = document.querySelector('body');
-            body.classList.toggle('dark-mode');
-        }
-    </script>
-</body>
-</html>
+            function animateEmojiFeedback() {
+                const emojiContainer = document.querySelector('.mood-container');
+                emojiContainer.classList.add('animate__animated', 'animate__heartBeat');
+
+                setTimeout(() => {
+                    emojiContainer.classList.remove('animate__heartBeat');
+                }, 1000);
+            }
+
+            function clearAllData() {
+                const confirmation = confirm("Are you sure you want to clear all your mood data?");
+                if (confirmation) {
+                    localStorage.removeItem('userMoods');
+                    alert("All mood data has been cleared.");
+                }
+            }
+
+            function toggleTheme() {
+                const body = document.querySelector('body');
+                body.classList.toggle('dark-mode');
+            }
+        </script>
+    </body>
+    </html>
