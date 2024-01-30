@@ -18,7 +18,6 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(to right, #FF6B6B, #6B6BFF);
             font-family: 'Comic Sans MS', cursive, sans-serif;
             color: #fff;
         }
@@ -188,6 +187,36 @@
         @media only screen and (max-width: 768px) {
             /* Add responsive styles here if needed */
         }
+
+        /* Dark theme */
+        body.dark-mode {
+            background: linear-gradient(to right, #333, #000);
+            color: #fff;
+        }
+
+        body.dark-mode .container {
+            background-color: #222;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .mood-emoji {
+            background-color: #333;
+            color: #fff;
+            border-color: #fff;
+        }
+
+        body.dark-mode .mood-emoji:hover {
+            background-color: #FFD700;
+            color: #000;
+        }
+
+        body.dark-mode .social-icons i {
+            color: #fff;
+        }
+
+        body.dark-mode .social-icons i:hover {
+            color: #FFD700;
+        }
     </style>
     <title>Mood Logger</title>
 </head>
@@ -200,6 +229,7 @@
         <div class="menu-container">
             <button class="button clear-button" onclick="clearAllData()">Clear All Data</button>
             <button class="button chart-button" onclick="showChart()">Show Chart</button>
+            <button class="button theme-button" onclick="toggleTheme()">Toggle Theme</button>
         </div>
 
         <div class="mood-container">
@@ -318,6 +348,11 @@
                 localStorage.removeItem('userMoods');
                 alert("All mood data has been cleared.");
             }
+        }
+
+        function toggleTheme() {
+            const body = document.querySelector('body');
+            body.classList.toggle('dark-mode');
         }
     </script>
 </body>
